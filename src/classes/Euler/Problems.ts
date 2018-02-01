@@ -50,7 +50,6 @@ export class Problems extends WAMG_Class {
 			let res = fg.next();
 			num = res.value;
 			if (num%2 > 0) continue;
-			console.log(num);
 			summ += res.value;
 		}
 		return summ;
