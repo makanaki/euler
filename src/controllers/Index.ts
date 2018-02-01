@@ -10,6 +10,9 @@ export class Index {
 				case 1: return Promise.resolve().then(() => {
 					return res.json({ result : probs.problem1() });
 				}).catch(next);
+				case 2: return Promise.resolve().then(() => {
+					return res.json({ result : probs.problem2() });
+				}).catch(next);
 				default: return Promise.resolve().then(() => {
 					return res.json({ result : 'ERROR' });
 				}).catch(next);
