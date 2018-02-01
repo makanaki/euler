@@ -1,0 +1,33 @@
+{
+  "name": "euler",
+  "version": "0.0.0",
+  "description": "Euler tests",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:makanaki/euler.git"
+  },
+  "main": "./src/server.js",
+  "scripts": {
+    "watch": "tsc -p . --pretty --watch",
+    "start": "nodemon",
+    "compile": "tsc -p . --pretty",
+    "test": "ECHO ERROR"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "express-handlebars": "^3.0.0",
+    "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^9.4.0",
+    "@types/promise": "^7.1.30",
+    "nodemon": "^1.12.1",
+    "typescript": "2.3.2"
+  },
+  "engines": {
+    "npm": ">=3.10.8",
+    "node": ">=6.8.0"
+  }
+}

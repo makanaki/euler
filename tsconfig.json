@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "outDir": "src",
+    "target": "es2017",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "preserveConstEnums": true,
+    "removeComments": false,
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "declaration": true,
+    "newLine": "LF",
+    "skipLibCheck": true
+  },
+  "files": [
+    "src/server.ts"
+  ]
+}
