@@ -9,25 +9,33 @@
   },
   "main": "./src/server.js",
   "scripts": {
-    "watch": "tsc -p . --pretty --watch",
-    "start": "nodemon",
+    "watch": "tsc -p . --pretty --watch  --preserveWatchOutput",
+    "start": "nodemon node src/test.js",
     "compile": "tsc -p . --pretty",
-    "test": "ECHO ERROR"
+    "test": "ECHO ERROR",
+    "dev": "concurrently -k -p \"[{name}]\" -n \"TS,ND\" -c \"red.inverse,cyan.inverse\" \"yarn watch\" \"yarn start\""
   },
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "express": "^4.16.2",
-    "express-handlebars": "^3.0.0",
-    "morgan": "^1.9.0"
   },
   "devDependencies": {
     "@types/node": "^9.4.0",
-    "@types/promise": "^7.1.30",
     "nodemon": "^1.12.1",
-    "typescript": "2.3.2"
+    "typescript": "2.8.1"
   },
   "engines": {
     "npm": ">=3.10.8",
     "node": ">=6.8.0"
+  },
+  "nodemonConfig": {
+    "delay": 333,
+    "verbose": false,
+    "ext": "js json",
+    "watch": [
+      "src"
+    ],
+    "ignore": [
+      "src/public",
+      "src/assets"
+    ]
   }
 }

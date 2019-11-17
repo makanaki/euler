@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "src",
-    "target": "es2017",
+    "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
     "preserveConstEnums": true,
@@ -12,7 +12,5 @@
     "newLine": "LF",
     "skipLibCheck": true
   },
-  "files": [
-    "src/server.ts"
-  ]
+  "files": ["src/test.ts"]
 }
