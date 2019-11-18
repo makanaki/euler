@@ -1,5 +1,251 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.problem20 = () => {
+    const addStringNumbers = (num1, num2, position = 0) => {
+        const digits = num2.split('').map(one => Number(one));
+        let result = num1;
+        let currpos = position;
+        while (digits.length) {
+            const digit = digits.shift();
+            let tdw = digit + Number(result[currpos] || 0);
+            if (tdw > 9) {
+                digits[0] = !digits[0] ? 1 : digits[0] + 1;
+                tdw = tdw - 10;
+            }
+            result = result.substr(0, currpos) + tdw + result.substr(currpos + 1);
+            currpos++;
+        }
+        return result;
+    };
+    // const N1 = '1011'
+    //     .split('')
+    //     .reverse()
+    //     .join('')
+    // const N2 = '989'
+    //     .split('')
+    //     .reverse()
+    //     .join('')
+    // console.log(
+    //     addStringNumbers(N1, N2, 0)
+    //         .split('')
+    //         .reverse()
+    //         .join('')
+    // )
+    const f = 100;
+    let e = '1';
+    for (let i = 1; i < f; i++) {
+        let next = e;
+        for (let n = 0; n < e.length; n++) {
+            const L = String(Number(e[n] || 0) * i);
+            next = addStringNumbers(next, L.split('')
+                .reverse()
+                .join(''), n);
+        }
+        e = next;
+    }
+    console.log(e
+        .split('')
+        .reverse()
+        .join(''));
+    return e
+        .split('')
+        .reduce((all, o) => all + Number(o), 0);
+};
+exports.problem19 = () => {
+    class TDate {
+        constructor() {
+            this.mns = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            this.d = 1;
+            this.m = 1;
+            this.y = 1900;
+            this.dow = 1;
+            this.isLeapYear = (y) => {
+                const by4 = y % 4 === 0;
+                const by100 = y % 100 === 0;
+                const by400 = y % 400 === 0;
+                if (by4 && by400)
+                    return true;
+                if (by4 && !by400 && !by100)
+                    return true;
+                return false;
+            };
+            this.monthDayCount = (y, m) => {
+                let mn = this.mns[m - 1];
+                if (m === 2 && this.isLeapYear(y)) {
+                    mn++;
+                }
+                return mn;
+            };
+            this.increment = () => {
+                this.d++;
+                let mn = this.monthDayCount(this.y, this.m);
+                if (this.d > mn) {
+                    this.m++;
+                    this.d = 1;
+                    if (this.m > 12) {
+                        this.m = 1;
+                        this.y++;
+                    }
+                }
+                this.dow++;
+                if (this.dow > 7) {
+                    this.dow = 1;
+                }
+            };
+            this.toString = () => {
+                return this.y + ' ' + this.m + ' ' + this.d;
+            };
+            this.toDate = (y, m, d) => {
+                if (m > 12)
+                    throw new Error('wrong month');
+                let mn = this.monthDayCount(y, m);
+                if (d > mn)
+                    throw new Error('wrong day');
+                const str = y + ' ' + m + ' ' + d;
+                while (this.toString() !== str) {
+                    this.increment();
+                }
+            };
+        }
+    }
+    const startDate = new TDate();
+    startDate.toDate(1901, 1, 1);
+    let cnt = 0;
+    while (startDate.toString() !== '2000 12 31') {
+        startDate.increment();
+        if (startDate.dow === 7 && startDate.d === 1) {
+            cnt++;
+        }
+    }
+    console.log(startDate.toString() + ' [' + startDate.dow + ']');
+    console.log(cnt);
+};
+exports.problem18 = () => {
+    const source = [
+        [75],
+        [95, 64],
+        [17, 47, 82],
+        [18, 35, 87, 10],
+        [20, 4, 82, 47, 65],
+        [19, 1, 23, 75, 3, 34],
+        [88, 2, 77, 73, 7, 63, 67],
+        [99, 65, 4, 28, 6, 16, 70, 92],
+        [41, 41, 26, 56, 83, 40, 80, 70, 33],
+        [41, 48, 72, 33, 47, 32, 37, 16, 94, 29],
+        [53, 71, 44, 65, 25, 43, 91, 52, 97, 51, 14],
+        [70, 11, 33, 28, 77, 73, 17, 78, 39, 68, 17, 57],
+        [91, 71, 52, 38, 17, 14, 91, 43, 58, 50, 27, 29, 48],
+        [63, 66, 4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31],
+        [4, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23],
+    ];
+    let cx = 1;
+    let path = [source[0]];
+    while (cx < source.length) {
+        path[cx] = source[cx].map((current, index) => {
+            const indexes = [index - 1, index].filter(one => one !== undefined && one >= 0);
+            const vals = indexes.map(idx => path[cx - 1][idx]).filter(one => one !== undefined);
+            console.log(current, vals);
+            return Math.max(...vals) + current;
+        });
+        cx++;
+    }
+    console.log(path);
+    console.log(Math.max(...path[path.length - 1]));
+};
+exports.problem17 = () => {
+    const digits = {
+        0: 'zero',
+        1: 'one',
+        2: 'two',
+        3: 'three',
+        4: 'four',
+        5: 'five',
+        6: 'six',
+        7: 'seven',
+        8: 'eight',
+        9: 'nine',
+        10: 'ten',
+        11: 'eleven',
+        12: 'twelve',
+        13: 'thirteen',
+        14: 'fourteen',
+        15: 'fifteen',
+        16: 'sixteen',
+        17: 'seventeen',
+        18: 'eighteen',
+        19: 'nineteen',
+        20: 'twenty',
+        30: 'thirty',
+        40: 'forty',
+        50: 'fifty',
+        60: 'sixty',
+        70: 'seventy',
+        80: 'eighty',
+        90: 'ninety',
+        100: 'hundred',
+    };
+    const numberToString = (num) => {
+        let curr = String(num);
+        let result = '';
+        while (curr.length) {
+            switch (true) {
+                case curr.length === 1:
+                    switch (true) {
+                        case num === 0:
+                            result = digits[0];
+                            break;
+                        case Number(curr) === 0:
+                            break;
+                        default:
+                            result = result.length ? result + ' ' : '';
+                            result += digits[Number(curr)];
+                            break;
+                    }
+                    curr = '';
+                    break;
+                case curr.length === 2:
+                    switch (true) {
+                        case Number(curr) === 0:
+                            curr = '';
+                            break;
+                        case Number(curr) < 21:
+                            result = String(num).length > 2 ? result + ' and' : '';
+                            result = result.length ? result + ' ' : '';
+                            result += digits[Number(curr)];
+                            curr = '';
+                            break;
+                        case Number(curr.substr(0, 1)) === 0:
+                            curr = curr.substr(1);
+                            break;
+                        default:
+                            result = String(num).length > 2 ? result + ' and' : '';
+                            result = result.length ? result + ' ' : '';
+                            result += digits[Number(curr.substr(0, 1)) * 10];
+                            curr = curr.substr(1);
+                            break;
+                    }
+                    break;
+                case curr.length === 3:
+                    result = result.length ? result + ' ' : '';
+                    result += digits[Number(curr.substr(0, 1))] + ' ' + digits[100];
+                    curr = curr.substr(1);
+                    break;
+                default:
+                    curr = curr.substr(1);
+                    break;
+            }
+        }
+        return result;
+    };
+    let cnt = 0;
+    for (let i = 1; i < 1000; i++) {
+        const num = numberToString(i);
+        cnt += num.replace(/ /gi, '').length;
+        console.log(num);
+    }
+    cnt += String('onethousand').length;
+    console.log(cnt);
+};
 exports.problem16 = () => {
     const pow = 1000;
     let arr = new Array(Math.round(pow / 2)).fill(0);

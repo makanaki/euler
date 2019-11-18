@@ -1,3 +1,7 @@
+export declare const problem20: () => number;
+export declare const problem19: () => void;
+export declare const problem18: () => void;
+export declare const problem17: () => void;
 export declare const problem16: () => void;
 export declare const problem15: () => any;
 export declare const problem14: () => void;
